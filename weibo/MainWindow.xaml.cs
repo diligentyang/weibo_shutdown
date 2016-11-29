@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace weibo
 {
     /// <summary>
@@ -34,7 +35,17 @@ namespace weibo
         private void button_Click(object sender, RoutedEventArgs e)
         {
             string username = textBox.Text;
-            string url = "http://s.weibo.com/user/%25E5%25BD%2593%25E5%25A4%25A9%25E7%25A9%25BA%25E6%259C%2589%25E4%25BA%2586%25E5%25A4%259CDe%25E9%25A2%259C&Refer=SUer_box&c=spr_sinamkt_buy_yinsu_weibo_t123";
+            string UserUrl = string.Empty;
+            UserUrl = getUserUrl(username);
+
+        }
+
+        private string getUserUrl(string username) {
+            //username = UrlEncode("当天空有了夜De颜色");
+            username = System.Web.HttpUtility.UrlEncode(username, System.Text.Encoding.UTF8);
+            username = System.Web.HttpUtility.UrlEncode(username, System.Text.Encoding.UTF8).ToUpper();
+            string UserUrl = string.Empty;
+            string url = "http://s.weibo.com/user/"+username+"&Refer=SUer_box&c=spr_sinamkt_buy_yinsu_weibo_t123";
             cookies = new CookieContainer();
             Encoding encoding = Encoding.UTF8;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -52,8 +63,21 @@ namespace weibo
             string retString = streamReader.ReadToEnd();
             streamReader.Close();
             responseStream.Close();
-            MessageBox.Show(retString);
+            File.WriteAllText(@"C:\wampserver\test.html", retString);
 
+            return UserUrl;
         }
+
+        /*public static string UrlEncode(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            byte[] byStr = System.Text.Encoding.UTF8.GetBytes(str); //默认是System.Text.Encoding.Default.GetBytes(str)
+            for (int i = 0; i < byStr.Length; i++)
+            {
+                sb.Append(@"%" + Convert.ToString(byStr[i], 16));
+            }
+
+            return (sb.ToString());
+        }*/
     }
 }
