@@ -1,1 +1,14 @@
 c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\bin\Debug\weibo.exe.config
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\bin\Debug\weibo.exe
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\bin\Debug\weibo.pdb
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.csprojResolveAssemblyReference.cache
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\MainWindow.g.cs
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\App.g.cs
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo_MarkupCompile.cache
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo_MarkupCompile.lref
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\MainWindow.baml
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.g.resources
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.Properties.Resources.resources
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.csproj.GenerateResource.Cache
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.exe
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.pdb

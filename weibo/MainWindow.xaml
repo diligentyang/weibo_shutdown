@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid RenderTransformOrigin="0.515,0.437">
-        <Button x:Name="button" Content="确定" HorizontalAlignment="Left" Margin="196,226,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button x:Name="button" Content="确定" HorizontalAlignment="Left" Margin="211,211,0,0" VerticalAlignment="Top" Width="76" Click="button_Click"/>
         <Label x:Name="label" Content="请输入微博用户名：" HorizontalAlignment="Left" Margin="74,56,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="122,108,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="248"/>
 
