@@ -1,0 +1,14 @@
+﻿<Window x:Class="weibo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:weibo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="button" Content="确定" HorizontalAlignment="Left" Margin="196,226,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label x:Name="label" Content="请输入微博用户名：" HorizontalAlignment="Left" Margin="74,56,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

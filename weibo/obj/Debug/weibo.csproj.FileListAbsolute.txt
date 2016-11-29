@@ -1,0 +1,1 @@
+c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\bin\Debug\weibo.exe.config
