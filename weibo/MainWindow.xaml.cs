@@ -43,19 +43,28 @@ namespace weibo
             //MessageBox.Show(UserUrl);
             //ExeCommand("start "+UserUrl);
             content = getUserContent(UserUrl);
-            File.WriteAllText(@"C:\wampserver\test.html", content);
-            MessageBox.Show("OK");
+            //File.WriteAllText(@"C:\wampserver\test.html", content);
+            //MessageBox.Show(content);
+            Regex reg = new Regex("关机");
 
+            Match match = reg.Match(content);
+
+            string value = match.Value;
+            MessageBox.Show(value);
         }
 
-        private string getUserContent(string UserUrl) {
+        /*private string getUserContent(string UserUrl) {
             string content = string.Empty;
             string url = UserUrl;
             cookies = new CookieContainer();
+            cookies.Add(new Uri(UserUrl), new Cookie("YF-V5-G0", "da1eb9ea7ccc47f9e865137ccb4cf9f3"));
+            cookies.Add(new Uri(UserUrl), new Cookie("YF-Page-G0", "8fee13afa53da91ff99fc89cc7829b07"));
+            cookies.Add(new Uri(UserUrl), new Cookie("SUB", "_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew.."));
+            cookies.Add(new Uri(UserUrl), new Cookie("SUBP", "0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg"));
             Encoding encoding = Encoding.UTF8;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
-            request.CookieContainer = new CookieContainer(); //暂存到新实例
+            request.CookieContainer = cookies; //暂存到新实例
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -70,6 +79,22 @@ namespace weibo
             responseStream.Close();
 
 
+            return content;
+        }*/
+
+        private string getUserContent(string UserUrl)
+        {
+            
+           string content = string.Empty;
+           WebClient MyWebClient = new WebClient();
+            MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
+
+            MyWebClient.Credentials = CredentialCache.DefaultCredentials;//获取或设置用于向Internet资源的请求进行身份验证的网络凭据
+
+            Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
+
+            content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
+            //MessageBox.Show(pageHtml);
             return content;
         }
 
@@ -96,6 +121,7 @@ namespace weibo
             string retString = streamReader.ReadToEnd();
             streamReader.Close();
             responseStream.Close();
+            //cookies.Add(response.Cookies);
            /* cookies = request.CookieContainer; //保存cookies
             strCookies = request.CookieContainer.GetCookieHeader(request.RequestUri);
             MessageBox.Show(strCookies);*/
