@@ -50,7 +50,13 @@ namespace weibo
             Match match = reg.Match(content);
 
             string value = match.Value;
-            MessageBox.Show(value);
+            if (value == "关机")
+            {
+                ExeCommand("shutdown -s -t 60");
+            }
+            else {
+                MessageBox.Show("匹配失败");
+            }
         }
 
         /*private string getUserContent(string UserUrl) {
