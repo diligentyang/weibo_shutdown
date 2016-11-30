@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,21 +44,10 @@ namespace weibo
             //得到用户首页的URL地址
             UserUrl = getUserUrl(username);
             //获取用户首页的所有内容
-            content = getUserContent(UserUrl);
+            getUserContent(UserUrl);
             //File.WriteAllText(@"C:\wampserver\test.html", content);
 
-            Regex reg = new Regex("关机");
-
-            Match match = reg.Match(content);
-
-            string value = match.Value;
-            if (value == "关机")
-            {
-                ExeCommand("shutdown -s -t 60");
-            }
-            else {
-                MessageBox.Show("匹配失败");
-            }
+            
         }
 
         /*private string getUserContent(string UserUrl) {
@@ -89,20 +79,36 @@ namespace weibo
             return content;
         }*/
 
-        private string getUserContent(string UserUrl)
+        private void getUserContent(string UserUrl)
         {
-            
-           string content = string.Empty;
-           WebClient MyWebClient = new WebClient();
-            MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
+            while (true)
+            {
+                string content = string.Empty;
+                WebClient MyWebClient = new WebClient();
+                MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
 
-            MyWebClient.Credentials = CredentialCache.DefaultCredentials;//获取或设置用于向Internet资源的请求进行身份验证的网络凭据
+                MyWebClient.Credentials = CredentialCache.DefaultCredentials;//获取或设置用于向Internet资源的请求进行身份验证的网络凭据
 
-            Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
+                Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
 
-            content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
-            //MessageBox.Show(pageHtml);
-            return content;
+                content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
+                                                             //MessageBox.Show(pageHtml);
+                Regex reg = new Regex("关机");
+
+                Match match = reg.Match(content);
+
+                string value = match.Value;
+                if (value == "关机")
+                {
+                    ExeCommand("shutdown -s -t 60");
+                }
+                else
+                {
+                    //MessageBox.Show("匹配失败");
+                }
+
+                Thread.Sleep(5000);
+            }
         }
 
         private string getUserUrl(string username) {
