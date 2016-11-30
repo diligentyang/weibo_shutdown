@@ -39,12 +39,13 @@ namespace weibo
             string username = textBox.Text;
             string UserUrl = string.Empty;
             string content = string.Empty;
+
+            //得到用户首页的URL地址
             UserUrl = getUserUrl(username);
-            //MessageBox.Show(UserUrl);
-            //ExeCommand("start "+UserUrl);
+            //获取用户首页的所有内容
             content = getUserContent(UserUrl);
             //File.WriteAllText(@"C:\wampserver\test.html", content);
-            //MessageBox.Show(content);
+
             Regex reg = new Regex("关机");
 
             Match match = reg.Match(content);
