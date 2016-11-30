@@ -38,9 +38,39 @@ namespace weibo
         {
             string username = textBox.Text;
             string UserUrl = string.Empty;
+            string content = string.Empty;
             UserUrl = getUserUrl(username);
             //MessageBox.Show(UserUrl);
-            ExeCommand("start "+UserUrl);
+            //ExeCommand("start "+UserUrl);
+            content = getUserContent(UserUrl);
+            File.WriteAllText(@"C:\wampserver\test.html", content);
+            MessageBox.Show("OK");
+
+        }
+
+        private string getUserContent(string UserUrl) {
+            string content = string.Empty;
+            string url = UserUrl;
+            cookies = new CookieContainer();
+            Encoding encoding = Encoding.UTF8;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
+            request.CookieContainer = new CookieContainer(); //暂存到新实例
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            Stream responseStream = response.GetResponseStream();
+            if (response.Headers["Content-Encoding"] != null && response.Headers["Content-Encoding"].ToLower().Contains("gzip"))
+            {
+                responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+            }
+            StreamReader streamReader = new StreamReader(responseStream, encoding);
+            string retString = streamReader.ReadToEnd();
+            streamReader.Close();
+            responseStream.Close();
+
+
+            return content;
         }
 
         private string getUserUrl(string username) {
@@ -66,7 +96,10 @@ namespace weibo
             string retString = streamReader.ReadToEnd();
             streamReader.Close();
             responseStream.Close();
-            File.WriteAllText(@"C:\wampserver\test.html", retString);
+           /* cookies = request.CookieContainer; //保存cookies
+            strCookies = request.CookieContainer.GetCookieHeader(request.RequestUri);
+            MessageBox.Show(strCookies);*/
+            //File.WriteAllText(@"C:\wampserver\test.html", retString);
             //<a class=\"W_linkb\" target=\"_blank\" href=\"http:\/\/weibo.com\/u\/5345048093?refer_flag=1001030201_\" class=\"wb_url\" suda-
             Regex reg = new Regex("<a class=.{2}W_linkb.{3}target=.*?href=(.*?)class");
 
