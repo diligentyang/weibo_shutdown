@@ -37,6 +37,7 @@ namespace weibo
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            button.Visibility =Visibility.Hidden;
             string username = textBox.Text;
             string UserUrl = string.Empty;
             string content = string.Empty;
@@ -44,7 +45,10 @@ namespace weibo
             //得到用户首页的URL地址
             UserUrl = getUserUrl(username);
             //获取用户首页的所有内容
-            getUserContent(UserUrl);
+
+            Thread t = new Thread(getUserContent);
+            t.Start((object)UserUrl);
+            MessageBox.Show("绑定完毕");
             //File.WriteAllText(@"C:\wampserver\test.html", content);
 
             
@@ -79,10 +83,12 @@ namespace weibo
             return content;
         }*/
 
-        private void getUserContent(string UserUrl)
+        private void getUserContent(object userUrl)
         {
+            string UserUrl = userUrl.ToString();
             while (true)
             {
+
                 string content = string.Empty;
                 WebClient MyWebClient = new WebClient();
                 MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
@@ -104,10 +110,10 @@ namespace weibo
                 }
                 else
                 {
-                    //MessageBox.Show("匹配失败");
+                   // MessageBox.Show("匹配失败");
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep(500);
             }
         }
 
