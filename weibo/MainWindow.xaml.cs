@@ -37,7 +37,7 @@ namespace weibo
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            button.Visibility =Visibility.Hidden;
+            
             string username = textBox.Text;
             string UserUrl = string.Empty;
             string content = string.Empty;
@@ -45,13 +45,20 @@ namespace weibo
             //得到用户首页的URL地址
             UserUrl = getUserUrl(username);
             //获取用户首页的所有内容
-
-            Thread t = new Thread(getUserContent);
-            t.Start((object)UserUrl);
-            MessageBox.Show("绑定完毕");
+            if (UserUrl == "") {
+                MessageBox.Show("微博名字输入错误请修正！");
+            }
+            else {
+                Thread t = new Thread(getUserContent);
+                t.Start((object)UserUrl);
+                button.Visibility = Visibility.Hidden;
+                MessageBox.Show("绑定完毕");
+                this.Close();
+            }
+            
             //File.WriteAllText(@"C:\wampserver\test.html", content);
 
-            
+
         }
 
         /*private string getUserContent(string UserUrl) {
@@ -110,10 +117,10 @@ namespace weibo
                 }
                 else
                 {
-                   // MessageBox.Show("匹配失败");
+                    //MessageBox.Show("匹配失败");
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(2000);
             }
         }
 
