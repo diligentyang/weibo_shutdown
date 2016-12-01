@@ -33,7 +33,25 @@ namespace weibo
         public MainWindow()
         {
             InitializeComponent();
+            /*string s = "12341243561253";
+            Regex reg = new Regex("(1.*?3)");
+            Match match = reg.Match(s);
+            while (match.Success) {
+                string value = match.Groups[1].Value;
+                MessageBox.Show(value);
+                match = match.NextMatch();
+            }*/
 
+            /*
+            Regex reg = new Regex(@"(?is)<li\s+class=""l1\s*"">([^<]+)</li>[^<]*<[^>]*>([^<]+)</li>(?:[^<]*<li[^>]*>\s*</li>)*[^<]*<li[^>]*>(\d{2})</li>");
+            MatchCollection mc = reg.Matches(yourStr);
+            foreach (Match m in mc)
+            {
+                richTextBox2.Text += m.Groups[1].Value + "\n";
+                richTextBox2.Text += m.Groups[2].Value + "\n";
+                richTextBox2.Text += m.Groups[3].Value + "\n";
+            }
+             */
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -120,7 +138,7 @@ namespace weibo
                 }
                 else
                 {
-                    MessageBox.Show("匹配失败");
+                    //MessageBox.Show("匹配失败");
                 }
 
                 Thread.Sleep(2000);
