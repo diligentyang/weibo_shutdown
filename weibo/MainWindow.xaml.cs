@@ -29,6 +29,7 @@ namespace weibo
     {
         string strCookies = string.Empty;
         CookieContainer cookies = null;
+        static Boolean flag = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +50,7 @@ namespace weibo
                 MessageBox.Show("微博名字输入错误请修正！");
             }
             else {
+                flag = true;
                 Thread t = new Thread(getUserContent);
                 t.Start((object)UserUrl);
                 button.Visibility = Visibility.Hidden;
@@ -94,7 +96,7 @@ namespace weibo
         private void getUserContent(object userUrl)
         {
             string UserUrl = userUrl.ToString();
-            while (true)
+            while (flag)
             {
 
                 string content = string.Empty;
@@ -118,7 +120,7 @@ namespace weibo
                 }
                 else
                 {
-                    //MessageBox.Show("匹配失败");
+                    MessageBox.Show("匹配失败");
                 }
 
                 Thread.Sleep(2000);
@@ -206,7 +208,10 @@ namespace weibo
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
+            flag = false;
+            MessageBox.Show("取消成功");
+            button.Visibility = Visibility.Visible;
+            button1.Visibility = Visibility.Hidden;
         }
     }
 }
