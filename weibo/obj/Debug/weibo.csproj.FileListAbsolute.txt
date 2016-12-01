@@ -11,3 +11,4 @@ c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debu
 c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.csproj.GenerateResource.Cache
 c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.exe
 c:\users\diligentyang\documents\visual studio 2015\Projects\weibo\weibo\obj\Debug\weibo.pdb
+C:\Users\diligentyang\Documents\Visual Studio 2015\Projects\weibo\weibo\obj\Debug\weibo.csprojResolveAssemblyReference.cache

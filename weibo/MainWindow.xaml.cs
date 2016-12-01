@@ -53,7 +53,8 @@ namespace weibo
                 t.Start((object)UserUrl);
                 button.Visibility = Visibility.Hidden;
                 MessageBox.Show("绑定完毕");
-                this.Close();
+                //this.Close();
+                button1.Visibility = Visibility.Visible;
             }
             
             //File.WriteAllText(@"C:\wampserver\test.html", content);
@@ -200,6 +201,11 @@ namespace weibo
                 strOutput = e.Message;
             }
             return strOutput;
+
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

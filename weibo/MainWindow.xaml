@@ -11,6 +11,7 @@
         <Label x:Name="label" Content="请输入微博用户名：" HorizontalAlignment="Left" Margin="72,35,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="122,86,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="248"/>
         <Label x:Name="label1" Content="注：本程序可以绑定任意一个微博用户，当微博用户主页面存在‘关机’二字时，电脑关闭" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button1" Content="取消绑定" Visibility="Hidden" HorizontalAlignment="Left" Margin="210,179,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
 
     </Grid>
 </Window>
