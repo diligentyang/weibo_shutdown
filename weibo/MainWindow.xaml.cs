@@ -135,15 +135,18 @@ namespace weibo
             //href=.*?title=.{2}(.{16}).{3}date=
             Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
             Match match = reg.Match(content);
-            Regex reg1 = new Regex("@@@(.*?)@@@");
+            Regex reg1 = new Regex("command(.*)command");
             Match match1;
+            Regex reg2 = new Regex("href=.*?title=.{2}(.{16}).{3}date=");
+            Match match2;
             int i = 1;
             while (match.Success&&i<6) {
                 i++;
                 value = match.Groups[1].Value;
                 match1 = reg1.Match(value);
+                MessageBox.Show(match1.Value);
                 if (match1.Value != "") {
-                    MessageBox.Show("yes");
+                    
                 }
                 match = match.NextMatch();
             }
