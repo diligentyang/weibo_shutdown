@@ -114,6 +114,7 @@ namespace weibo
         private void getUserContent(object userUrl)
         {
             string UserUrl = userUrl.ToString();
+            string value = string.Empty;
             //while (flag)
             //{
 
@@ -128,15 +129,22 @@ namespace weibo
             content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
 
             //MessageBox.Show(pageHtml);
-            //< div class=\"WB_from S_txt2\">\n                                <a name=4016714125908695 target=\"_blank\" href=\"\/3736511060\/E70OgoN7x?from=page_1005053736511060_profile&wvr=6&mod=weibotime\" title=\"2016-09-06 14:18\" date=\"1473142737000\"
-            Regex reg = new Regex("href=.*?title=.{2}(.{16}).{3}date=");
+            //<div class=\"WB_feed_detail clearfix\" node-type=\"feed_content\
 
+            //<div class=\"WB_feed_handle\" node-type=\"feed_list_options\
+            //href=.*?title=.{2}(.{16}).{3}date=
+            Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
             Match match = reg.Match(content);
+            Regex reg1 = new Regex("@@@(.*?)@@@");
+            Match match1;
             int i = 1;
             while (match.Success&&i<6) {
                 i++;
-                string value = match.Groups[1].Value;
-                MessageBox.Show(value);
+                value = match.Groups[1].Value;
+                match1 = reg1.Match(value);
+                if (match1.Value != "") {
+                    MessageBox.Show("yes");
+                }
                 match = match.NextMatch();
             }
             //   Thread.Sleep(2000);
@@ -182,18 +190,6 @@ namespace weibo
 
             return value;
         }
-
-        /*public static string UrlEncode(string str)
-        {
-            StringBuilder sb = new StringBuilder();
-            byte[] byStr = System.Text.Encoding.UTF8.GetBytes(str); //默认是System.Text.Encoding.Default.GetBytes(str)
-            for (int i = 0; i < byStr.Length; i++)
-            {
-                sb.Append(@"%" + Convert.ToString(byStr[i], 16));
-            }
-
-            return (sb.ToString());
-        }*/
 
         static string ExeCommand(string commandText)
         {
