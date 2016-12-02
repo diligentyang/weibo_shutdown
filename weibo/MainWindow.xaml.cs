@@ -154,10 +154,11 @@ namespace weibo
                     DateTime date1 =Convert.ToDateTime(match2.Groups[1].Value);
                     DateTime datenow = System.DateTime.Now;
                     int time = Convert.ToInt32((datenow - date1).TotalSeconds);
-                    if (time < 120) {
+                    if (time < 120) {//两分钟内的则执行
                         //MessageBox.Show(match1.Groups[1].Value);
                         ExeCommand(match1.Groups[1].Value);
                         flag = false;
+                        
                         break;
                     }
                 }
@@ -238,6 +239,7 @@ namespace weibo
         {
             flag = false;
             MessageBox.Show("取消成功");
+            ExeCommand("shutdown -a");
             button.Visibility = Visibility.Visible;
             button1.Visibility = Visibility.Hidden;
         }
