@@ -137,7 +137,8 @@ namespace weibo
             Match match = reg.Match(content);
             Regex reg1 = new Regex("command(.*)command");
             Match match1;
-            Regex reg2 = new Regex("href=.*?title=.{2}(.{16}).{3}date=");
+            //<div class=\"WB_from S_txt2\">\n
+            Regex reg2 = new Regex("<div class=.{2}WB_from.*?href=.*?title=.{2}(.{16}).{3}date=");
             Match match2;
             int i = 1;
             while (match.Success&&i<6) {
@@ -146,6 +147,8 @@ namespace weibo
                 match1 = reg1.Match(value);
                 MessageBox.Show(match1.Value);
                 if (match1.Value != "") {
+                    match2 = reg2.Match(value);
+                    DateTime date1 =Convert.ToDateTime(match2.Groups[1].Value);
                     
                 }
                 match = match.NextMatch();
