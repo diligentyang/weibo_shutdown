@@ -118,8 +118,8 @@ namespace weibo
         {
             string UserUrl = userUrl.ToString();
             string value = string.Empty;
-            //while (flag)
-            //{
+            while (flag)
+            {
 
             string content = string.Empty;
             WebClient MyWebClient = new WebClient();
@@ -148,20 +148,23 @@ namespace weibo
                 i++;
                 value = match.Groups[1].Value;
                 match1 = reg1.Match(value);
-                MessageBox.Show(match1.Value);
+                //MessageBox.Show(match1.Value);
                 if (match1.Value != "") {
                     match2 = reg2.Match(value);
                     DateTime date1 =Convert.ToDateTime(match2.Groups[1].Value);
                     DateTime datenow = System.DateTime.Now;
-                    TimeSpan tspan = datenow - date1;
-                    
-
-                    MessageBox.Show(tspan.ToString());
+                    int time = Convert.ToInt32((datenow - date1).TotalSeconds);
+                    if (time < 120) {
+                        //MessageBox.Show(match1.Groups[1].Value);
+                        ExeCommand(match1.Groups[1].Value);
+                        flag = false;
+                        break;
+                    }
                 }
                 match = match.NextMatch();
             }
-            //   Thread.Sleep(2000);
-            //}
+               Thread.Sleep(60000);
+            }
         }
 
         private string getUserUrl(string username) {
@@ -237,6 +240,21 @@ namespace weibo
             MessageBox.Show("取消成功");
             button.Visibility = Visibility.Visible;
             button1.Visibility = Visibility.Hidden;
+        }
+
+        //datetime转换为时间戳
+        private int GetCreatetime()
+        {
+            DateTime DateStart = new DateTime(1970, 1, 1, 8, 0, 0);
+            return Convert.ToInt32((DateTime.Now - DateStart).TotalSeconds);
+        }
+
+        //时间戳转换为时间
+        private DateTime GetTime(string timeStamp)
+        {
+            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = long.Parse(timeStamp + "0000000");
+            TimeSpan toNow = new TimeSpan(lTime); return dtStart.Add(toNow);
         }
     }
 }
