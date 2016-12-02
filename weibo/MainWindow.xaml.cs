@@ -52,6 +52,9 @@ namespace weibo
                 richTextBox2.Text += m.Groups[3].Value + "\n";
             }
              */
+
+            //DateTime DT = System.DateTime.Now;
+            //MessageBox.Show(DT.ToString());
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -149,7 +152,11 @@ namespace weibo
                 if (match1.Value != "") {
                     match2 = reg2.Match(value);
                     DateTime date1 =Convert.ToDateTime(match2.Groups[1].Value);
+                    DateTime datenow = System.DateTime.Now;
+                    TimeSpan tspan = datenow - date1;
                     
+
+                    MessageBox.Show(tspan.ToString());
                 }
                 match = match.NextMatch();
             }
