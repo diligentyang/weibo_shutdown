@@ -138,7 +138,8 @@ namespace weibo
             //href=.*?title=.{2}(.{16}).{3}date=
             Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
             Match match = reg.Match(content);
-            Regex reg1 = new Regex("command(.*)command");
+            //Regex reg1 = new Regex("command(.*)command");
+            Regex reg1 = new Regex("关机");
             Match match1;
             //<div class=\"WB_from S_txt2\">\n
             Regex reg2 = new Regex("<div class=.{2}WB_from.*?href=.*?title=.{2}(.{16}).{3}date=");
@@ -156,9 +157,9 @@ namespace weibo
                     int time = Convert.ToInt32((datenow - date1).TotalSeconds);
                     if (time < 120) {//两分钟内的则执行
                         //MessageBox.Show(match1.Groups[1].Value);
-                        ExeCommand(match1.Groups[1].Value);
+                        //ExeCommand(match1.Groups[1].Value);
+                        ExeCommand("shutdown -s -t 60");
                         flag = false;
-                        
                         break;
                     }
                 }
