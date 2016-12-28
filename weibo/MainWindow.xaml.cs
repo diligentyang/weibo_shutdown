@@ -121,51 +121,54 @@ namespace weibo
             while (flag)
             {
 
-            string content = string.Empty;
-            WebClient MyWebClient = new WebClient();
-            MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
+                string content = string.Empty;
+                WebClient MyWebClient = new WebClient();
+                MyWebClient.Headers.Add("Cookie", "YF-V5-G0=da1eb9ea7ccc47f9e865137ccb4cf9f3; YF-Page-G0=8fee13afa53da91ff99fc89cc7829b07; SUB=_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew..; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg");
 
-            MyWebClient.Credentials = CredentialCache.DefaultCredentials;//获取或设置用于向Internet资源的请求进行身份验证的网络凭据
+                MyWebClient.Credentials = CredentialCache.DefaultCredentials;//获取或设置用于向Internet资源的请求进行身份验证的网络凭据
 
-            Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
+                Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
 
-            content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
+                content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
 
-            //MessageBox.Show(pageHtml);
-            //<div class=\"WB_feed_detail clearfix\" node-type=\"feed_content\
+                //MessageBox.Show(pageHtml);
+                //<div class=\"WB_feed_detail clearfix\" node-type=\"feed_content\
 
-            //<div class=\"WB_feed_handle\" node-type=\"feed_list_options\
-            //href=.*?title=.{2}(.{16}).{3}date=
-            Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
-            Match match = reg.Match(content);
-            //Regex reg1 = new Regex("command(.*)command");
-            Regex reg1 = new Regex("关机");
-            Match match1;
-            //<div class=\"WB_from S_txt2\">\n
-            Regex reg2 = new Regex("<div class=.{2}WB_from.*?href=.*?title=.{2}(.{16}).{3}date=");
-            Match match2;
-            int i = 1;
-            while (match.Success&&i<6) {
-                i++;
-                value = match.Groups[1].Value;
-                match1 = reg1.Match(value);
-                //MessageBox.Show(match1.Value);
-                if (match1.Value != "") {
-                    match2 = reg2.Match(value);
-                    DateTime date1 =Convert.ToDateTime(match2.Groups[1].Value);
-                    DateTime datenow = System.DateTime.Now;
-                    int time = Convert.ToInt32((datenow - date1).TotalSeconds);
-                    if (time < 120) {//两分钟内的则执行
-                        //MessageBox.Show(match1.Groups[1].Value);
-                        //ExeCommand(match1.Groups[1].Value);
-                        ExeCommand("shutdown -s -t 60");
-                        flag = false;
-                        break;
+                //<div class=\"WB_feed_handle\" node-type=\"feed_list_options\
+                //href=.*?title=.{2}(.{16}).{3}date=
+                Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
+                Match match = reg.Match(content);
+                //Regex reg1 = new Regex("command(.*)command");
+                Regex reg1 = new Regex("关机");
+                Match match1;
+                //<div class=\"WB_from S_txt2\">\n
+                Regex reg2 = new Regex("<div class=.{2}WB_from.*?href=.*?title=.{2}(.{16}).{3}date=");
+                Match match2;
+                int i = 1;
+                while (match.Success && i < 6)
+                {
+                    i++;
+                    value = match.Groups[1].Value;
+                    match1 = reg1.Match(value);
+                    //MessageBox.Show(match1.Value);
+                    if (match1.Value != "")
+                    {
+                        match2 = reg2.Match(value);
+                        DateTime date1 = Convert.ToDateTime(match2.Groups[1].Value);
+                        DateTime datenow = System.DateTime.Now;
+                        int time = Convert.ToInt32((datenow - date1).TotalSeconds);
+                        if (time < 10)
+                        {//10s内则执行
+                         //MessageBox.Show(match1.Groups[1].Value);
+                         //ExeCommand(match1.Groups[1].Value);
+                            ExeCommand("shutdown -s -t 60");
+                            flag = false;
+                            break;
+                        }
                     }
+                    match = match.NextMatch();
                 }
-                match = match.NextMatch();
-            }
-               Thread.Sleep(60000);
+                Thread.Sleep(10000);
             }
         }
 
@@ -173,38 +176,43 @@ namespace weibo
             //username = UrlEncode("当天空有了夜De颜色");
             username = System.Web.HttpUtility.UrlEncode(username, System.Text.Encoding.UTF8);
             username = System.Web.HttpUtility.UrlEncode(username, System.Text.Encoding.UTF8).ToUpper();
-            
-            string url = "http://s.weibo.com/user/"+username+"&Refer=SUer_box&c=spr_sinamkt_buy_yinsu_weibo_t123";
-            cookies = new CookieContainer();
-            Encoding encoding = Encoding.UTF8;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            string value = "";
+            try {
+                string url = "http://s.weibo.com/user/" + username + "&Refer=SUer_box&c=spr_sinamkt_buy_yinsu_weibo_t123";
+                cookies = new CookieContainer();
+                Encoding encoding = Encoding.UTF8;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
-            request.CookieContainer = new CookieContainer(); //暂存到新实例
+                request.CookieContainer = new CookieContainer(); //暂存到新实例
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            Stream responseStream = response.GetResponseStream();
-            if (response.Headers["Content-Encoding"] != null && response.Headers["Content-Encoding"].ToLower().Contains("gzip"))
-            {
-                responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                Stream responseStream = response.GetResponseStream();
+                if (response.Headers["Content-Encoding"] != null && response.Headers["Content-Encoding"].ToLower().Contains("gzip"))
+                {
+                    responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                }
+                StreamReader streamReader = new StreamReader(responseStream, encoding);
+                string retString = streamReader.ReadToEnd();
+                streamReader.Close();
+                responseStream.Close();
+                //cookies.Add(response.Cookies);
+                /* cookies = request.CookieContainer; //保存cookies
+                 strCookies = request.CookieContainer.GetCookieHeader(request.RequestUri);
+                 MessageBox.Show(strCookies);*/
+                //File.WriteAllText(@"C:\wampserver\test.html", retString);
+                //<a class=\"W_linkb\" target=\"_blank\" href=\"http:\/\/weibo.com\/u\/5345048093?refer_flag=1001030201_\" class=\"wb_url\" suda-
+                Regex reg = new Regex("<a class=.{2}W_linkb.{3}target=.*?href=(.*?)class");
+
+                Match match = reg.Match(retString);
+
+                value = match.Groups[1].Value;
+                value = value.Replace("\"", "");
+                value = value.Replace("\\", "");
+            } catch (Exception e) {
+                MessageBox.Show("网络未连接！");
             }
-            StreamReader streamReader = new StreamReader(responseStream, encoding);
-            string retString = streamReader.ReadToEnd();
-            streamReader.Close();
-            responseStream.Close();
-            //cookies.Add(response.Cookies);
-           /* cookies = request.CookieContainer; //保存cookies
-            strCookies = request.CookieContainer.GetCookieHeader(request.RequestUri);
-            MessageBox.Show(strCookies);*/
-            //File.WriteAllText(@"C:\wampserver\test.html", retString);
-            //<a class=\"W_linkb\" target=\"_blank\" href=\"http:\/\/weibo.com\/u\/5345048093?refer_flag=1001030201_\" class=\"wb_url\" suda-
-            Regex reg = new Regex("<a class=.{2}W_linkb.{3}target=.*?href=(.*?)class");
-
-            Match match = reg.Match(retString);
-
-            string value = match.Groups[1].Value;
-            value = value.Replace("\"", "");
-            value = value.Replace("\\","");
+           
 
             return value;
         }
