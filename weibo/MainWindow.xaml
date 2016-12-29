@@ -13,7 +13,7 @@
         <Label x:Name="label1" Content="注：本程序可以绑定任意一个微博用户，当微博用户主页面存在'关机'二字时，电脑关闭" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top"/>
 
         <Button x:Name="button1" Content="取消绑定" Visibility="Hidden" HorizontalAlignment="Left" Margin="210,179,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
-        <Label x:Name="label2" Content="且超过2分钟以后的关机指令不会起效。（本程序在绑定成功后，可以直接关闭掉）" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="471"/>
+        <Label x:Name="label2" Content="且超过1分钟以后的关机指令不会起效。（本程序在绑定成功后，可以直接关闭掉）" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="471"/>
 
     </Grid>
 </Window>

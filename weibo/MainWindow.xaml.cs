@@ -33,28 +33,6 @@ namespace weibo
         public MainWindow()
         {
             InitializeComponent();
-            /*string s = "12341243561253";
-            Regex reg = new Regex("(1.*?3)");
-            Match match = reg.Match(s);
-            while (match.Success) {
-                string value = match.Groups[1].Value;
-                MessageBox.Show(value);
-                match = match.NextMatch();
-            }*/
-
-            /*
-            Regex reg = new Regex(@"(?is)<li\s+class=""l1\s*"">([^<]+)</li>[^<]*<[^>]*>([^<]+)</li>(?:[^<]*<li[^>]*>\s*</li>)*[^<]*<li[^>]*>(\d{2})</li>");
-            MatchCollection mc = reg.Matches(yourStr);
-            foreach (Match m in mc)
-            {
-                richTextBox2.Text += m.Groups[1].Value + "\n";
-                richTextBox2.Text += m.Groups[2].Value + "\n";
-                richTextBox2.Text += m.Groups[3].Value + "\n";
-            }
-             */
-
-            //DateTime DT = System.DateTime.Now;
-            //MessageBox.Show(DT.ToString());
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -79,40 +57,7 @@ namespace weibo
                 //this.Close();
                 button1.Visibility = Visibility.Visible;
             }
-            
-            //File.WriteAllText(@"C:\wampserver\test.html", content);
-
-
         }
-
-        /*private string getUserContent(string UserUrl) {
-            string content = string.Empty;
-            string url = UserUrl;
-            cookies = new CookieContainer();
-            cookies.Add(new Uri(UserUrl), new Cookie("YF-V5-G0", "da1eb9ea7ccc47f9e865137ccb4cf9f3"));
-            cookies.Add(new Uri(UserUrl), new Cookie("YF-Page-G0", "8fee13afa53da91ff99fc89cc7829b07"));
-            cookies.Add(new Uri(UserUrl), new Cookie("SUB", "_2AkMvYrpCf8NhqwJRmP4UyW_rbot0yQvEieLBAH7sJRMxHRl-yT83qk4ktRAKQx4PE5vwZZT70h16amGD0gtJew.."));
-            cookies.Add(new Uri(UserUrl), new Cookie("SUBP", "0033WrSXqPxfM72-Ws9jqgMF55529P9D9W562bRgXwsoyO0gZUUN7nIg"));
-            Encoding encoding = Encoding.UTF8;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-            request.CookieContainer = cookies; //暂存到新实例
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            Stream responseStream = response.GetResponseStream();
-            if (response.Headers["Content-Encoding"] != null && response.Headers["Content-Encoding"].ToLower().Contains("gzip"))
-            {
-                responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
-            }
-            StreamReader streamReader = new StreamReader(responseStream, encoding);
-            string retString = streamReader.ReadToEnd();
-            streamReader.Close();
-            responseStream.Close();
-
-
-            return content;
-        }*/
 
         private void getUserContent(object userUrl)
         {
@@ -130,7 +75,7 @@ namespace weibo
                 Byte[] pageData = MyWebClient.DownloadData(UserUrl); //从指定网站下载数据
 
                 content = Encoding.UTF8.GetString(pageData); //如果获取网站页面采用的是UTF-8，则使用这句
-
+                
                 //MessageBox.Show(pageHtml);
                 //<div class=\"WB_feed_detail clearfix\" node-type=\"feed_content\
 
@@ -138,6 +83,8 @@ namespace weibo
                 //href=.*?title=.{2}(.{16}).{3}date=
                 Regex reg = new Regex("<div class=.{2}WB_feed_detail clearfix.*?node-type=.{2}feed_content(.*?)<div class=.{2}WB_feed_handle.{3}node-type=.{2}feed_list_options");
                 Match match = reg.Match(content);
+
+                //File.WriteAllText(@"C:\wampserver\test.html", content);
                 //Regex reg1 = new Regex("command(.*)command");
                 Regex reg1 = new Regex("关机");
                 Match match1;
@@ -150,14 +97,15 @@ namespace weibo
                     i++;
                     value = match.Groups[1].Value;
                     match1 = reg1.Match(value);
-                    //MessageBox.Show(match1.Value);
+                    
                     if (match1.Value != "")
                     {
                         match2 = reg2.Match(value);
                         DateTime date1 = Convert.ToDateTime(match2.Groups[1].Value);
                         DateTime datenow = System.DateTime.Now;
                         int time = Convert.ToInt32((datenow - date1).TotalSeconds);
-                        if (time < 10)
+                        //MessageBox.Show(time.ToString());
+                        if (time < 120)
                         {//10s内则执行
                          //MessageBox.Show(match1.Groups[1].Value);
                          //ExeCommand(match1.Groups[1].Value);
